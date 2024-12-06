@@ -26,7 +26,7 @@ pear run --dev . [topic]
 
 ## structure
 
-- [App.js](app/App.js) - entrypoint of React Native UI
+- [App.tsx](app/App.js) - entrypoint of React Native UI
 - [worklet](app/worklet) - code for bare runtime (via [https://github.com/holepunchto/react-native-bare-kit](react-native-bare-kit))
   - app.cjs - bare code entrypoint, written with Common JS (Node) format
 - src/hook/[useWorklet](app/src/hook/useWorklet.js) - react hook to access [https://github.com/holepunchto/react-native-bare-kit](react-native-bare-kit) APIs
@@ -34,7 +34,7 @@ pear run --dev . [topic]
 
 ## Overview
 
-`App.js` and `src/` host normal React Native code, which will run in UI thread.
+`App.tsx` and `src/` host normal React Native code, which will run in UI thread.
 
 Pear/Bare code is run through a separate process (like web worker) called `worklet`.
 
