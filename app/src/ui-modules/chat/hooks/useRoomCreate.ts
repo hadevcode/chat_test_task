@@ -1,16 +1,17 @@
-import { SetStateAction, useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useBackend } from '../../../app/hooks';
+import { useMessagesState } from '../../../ui-modules/chat/hooks/useMessagesState';
 
 export const useRoomCreate = () => {
+  const { updateRoomTopic } = useMessagesState();
   const backend = useBackend();
-  const [roomTopic, setRoomTopic] = useState('');
   const [loading, setLoading] = useState(false);
 
   const create = async () => {
     try {
       setLoading(true);
       await backend?.createRoom((topic: string) => {
-        setRoomTopic(topic);
+        updateRoomTopic(topic);
       });
     } catch (error) {
       console.error('Error in handleCreate:', error);
@@ -19,5 +20,5 @@ export const useRoomCreate = () => {
     }
   };
 
-  return { roomTopic, create, loading };
+  return { create, loading };
 };

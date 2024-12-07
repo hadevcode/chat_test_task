@@ -8,7 +8,7 @@ export function useStyles() {
       backgroundColor: '#CCC',
     },
     flatList: {
-      marginBottom: 5,
+      paddingBottom: 10,
     },
     listLoader: {
       marginVertical: 10,

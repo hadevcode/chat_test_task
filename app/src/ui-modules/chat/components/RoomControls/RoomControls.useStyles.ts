@@ -33,7 +33,9 @@ export function useStyles() {
     input: {
       color: 'white',
     },
-    createButton: {},
+    loadingIndicator: {
+      color: 'black',
+    },
   });
 
   return { styles };

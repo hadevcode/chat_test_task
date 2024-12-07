@@ -5,8 +5,8 @@ export function useStyles() {
   const dimensions = useWindowDimensions();
 
   const buttonStyleColorsSet = {
-    default: 'black',
-    destructive: 'red',
+    default: '#2e2e2e',
+    destructive: '#ed4337',
   };
   const buttonStyleSet = {
     default: StyleSheet.create({
@@ -23,7 +23,7 @@ export function useStyles() {
   const wrapperSizeStyleSet = {
     default: StyleSheet.create({
       size: {
-        width: 150,
+        width: 220,
       },
     }),
     'full-width': StyleSheet.create({
@@ -41,7 +41,6 @@ export function useStyles() {
       marginRight: -8,
       borderWidth: 0.6,
       borderColor: '#0B192C',
-      // overflow: 'hidden',
       shadowColor: '#FFF',
       shadowOffset: {
         width: 0,
@@ -71,8 +70,8 @@ export function useStyles() {
       width: 18,
     },
     description: {
-      color: '#CCC',
-      fontSize: 16,
+      color: '#7e7e7e',
+      fontSize: 12,
       paddingLeft: 28,
     },
   });

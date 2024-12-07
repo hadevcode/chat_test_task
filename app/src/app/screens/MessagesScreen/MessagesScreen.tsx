@@ -1,4 +1,9 @@
-import React, { useLayoutEffect } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import {
@@ -21,6 +26,8 @@ import { MeatballsMenu } from '../../../ui-kit';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TAppScreens } from '../types';
 import { IMeatballEvent } from '../../../ui-kit/MeatballsMenu/MeatballsMenu';
+import { useBackend } from '../../hooks';
+import { useMessagesState } from '../../../ui-modules/chat/hooks/useMessagesState';
 
 const imageBackground = require('../../../../assets/messagesBackground.jpg');
 
@@ -28,9 +35,23 @@ export const MessagesScreen = ({
   navigation,
   route,
 }: NativeStackScreenProps<TAppScreens, 'MessagesScreen'>) => {
+  const backend = useBackend();
   const { styles } = useStyles();
-  const { messages, peersCount, inputText, handleSend, setInputText } =
-    useRoom();
+  const { messages, peersCount, appendMessage } = useRoom();
+  const { clearAllMessages, isConnected, clearState } = useMessagesState();
+  const [inputText, setInputText] = useState('');
+  useEffect(() => {
+    return () => {
+      clearState();
+    };
+  }, []);
+
+  const handleSend = useCallback(() => {
+    if (inputText.trim()) {
+      backend?.sendMessage(inputText, appendMessage);
+      setInputText('');
+    }
+  }, [backend, inputText, appendMessage]);
 
   const meatballOptions: IMeatballEvent[] = [
     {
@@ -38,6 +59,14 @@ export const MessagesScreen = ({
         Clipboard.setString(route.params.roomTopic);
       },
       text: 'Copy Topic',
+    },
+    {
+      onPress: () => {
+        clearAllMessages();
+      },
+      text: 'Clear Messages',
+      type: 'destructive',
+      description: 'Remove all local messages',
     },
   ];
 
@@ -53,6 +82,7 @@ export const MessagesScreen = ({
         color: 'white',
       },
       headerTintColor: 'white',
+      gestureEnabled: false,
     });
   }, [navigation, peersCount]);
 
@@ -60,7 +90,7 @@ export const MessagesScreen = ({
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0} // Adjust the offset if needed
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Screen statusBarType={'darkGrey'} title="Messages">
@@ -70,11 +100,7 @@ export const MessagesScreen = ({
               style={styles.container}
               resizeMode="cover"
             >
-              <MessageList
-                messages={messages}
-                roomTopic={route.params?.roomTopic}
-                peersCount={peersCount}
-              />
+              <MessageList messages={messages} />
             </ImageBackground>
             <MessageInput
               inputText={inputText}

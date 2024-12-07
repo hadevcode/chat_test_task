@@ -21,7 +21,7 @@ const MessageInput = ({
         multiline
         placeholderTextColor={'#fff'}
       />
-      <TouchableOpacity onPress={handleSend}>
+      <TouchableOpacity onPress={handleSend} disabled={!inputText?.length}>
         <SendIcon width={40} height={25} color={'#FFF'} />
       </TouchableOpacity>
     </View>

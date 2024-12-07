@@ -1,9 +1,8 @@
 import React from 'react';
 import { useStyles } from './RoomControls.useStyles';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Layout } from '../../../../ui-kit';
 import { Button, Input } from '@rneui/base';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 const RoomControls = ({
@@ -11,7 +10,9 @@ const RoomControls = ({
   roomTopicIn,
   setRoomTopicIn,
   onJoinPress,
-  isLoading,
+  isJoinLoading,
+  isRoomCreationLoading,
+  error,
 }: IRoomControlsProps) => {
   const onPaste = async () => {
     const copiedText = await Clipboard.getString();
@@ -30,6 +31,7 @@ const RoomControls = ({
             onChangeText={setRoomTopicIn}
             containerStyle={styles.inputContainer}
             style={styles.input}
+            errorMessage={error}
           />
           <Button
             onPress={onPaste}
@@ -38,19 +40,21 @@ const RoomControls = ({
             title={'Paste'}
           />
         </View>
-
         <Button
           containerStyle={styles.button}
           title="Join"
           onPress={onJoinPress}
-          disabled={!roomTopicIn}
+          loading={isJoinLoading}
+          disabled={isJoinLoading || !roomTopicIn}
+          loadingProps={styles.loadingIndicator}
         />
       </View>
       <Button
-        loading={isLoading}
-        containerStyle={styles.createButton}
+        loading={isRoomCreationLoading}
         onPress={handleCreate}
+        disabled={isRoomCreationLoading}
         title={'Create Room'}
+        loadingProps={styles.loadingIndicator}
       />
     </Layout>
   );
@@ -61,7 +65,9 @@ export interface IRoomControlsProps {
   roomTopicIn: string;
   setRoomTopicIn: React.Dispatch<React.SetStateAction<string>>;
   onJoinPress: () => void;
-  isLoading?: boolean;
+  isRoomCreationLoading?: boolean;
+  isJoinLoading?: boolean;
+  error?: string;
 }
 
 export default RoomControls;

@@ -1,22 +1,18 @@
 import React, { useRef } from 'react';
 import { useStyles } from './Message.useStyles';
 import { GestureResponderEvent, Text, View } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withClamp,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import { IMessage } from '../../../../typings';
 import { dayjs } from '../../../../common/utils';
 
 const Message = ({ message }: IMessageListProps) => {
+  const startX = useRef(0);
   const { styles } = useStyles(message.local);
   const translateX = useSharedValue(0);
-  const startX = useRef(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],

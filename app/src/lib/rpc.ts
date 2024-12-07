@@ -11,7 +11,8 @@ import {
   API_UPDATE_CONNECTIONS,
 } from '../../worklet/api.mjs';
 import { Worklet } from 'react-native-bare-kit';
-import { Callback } from '@react-native-async-storage/async-storage/lib/typescript/types';
+
+type Callback = (arg1: any, arg2?: any) => void;
 
 // RPCs receiver from worklet to UI
 export const rpcHandler = async (req: {
@@ -74,16 +75,39 @@ export const getBackend = (rpc: Worklet['RPC']) => ({
       callback(null);
     }
   },
-  joinRoom: (topic: string, callback: Callback) => {
-    if (!rpc || !callback || !topic) return;
-    const req = rpc.request(API_JOIN_ROOM);
-    req.send(topic);
-    req.reply('utf8').then((res: string) => {
-      const { done, topic } = JSON.parse(res);
-      console.log(done ? `[info] Joined chat room` : `[info] Joined fail`);
-      callback(topic);
-    });
+  joinRoom: async (topic: string, callback: Callback) => {
+    if (!rpc || !callback || !topic) {
+      throw new Error(
+        'Invalid arguments: rpc, callback, and topic are required'
+      );
+    }
+
+    try {
+      const req = rpc.request(API_JOIN_ROOM);
+      req.send(topic);
+
+      const res = await req.reply('utf8');
+      const { done, topic: joinedTopic } = JSON.parse(res);
+
+      console.log(done ? `[info] Joined chat room` : `[info] Join failed`);
+      callback(joinedTopic, done);
+
+      if (!done) {
+        throw new Error('Failed to join the room');
+      }
+    } catch (error: any) {
+      console.error('[error] Failed to join chat room:', error);
+
+      callback(null, false);
+
+      throw error instanceof Error
+        ? error
+        : new Error(
+            typeof error === 'string' ? error : 'An unknown error occurred'
+          );
+    }
   },
+
   sendMessage: (
     message: string,
     callback: (message: string, arg1: boolean) => void

@@ -1,7 +1,8 @@
 export interface IMessage {
   local: boolean;
+  id: string;
   message: string;
-  timestamp: string | Date;
+  timestamp: string;
   type: string;
   memberId?: string;
 }

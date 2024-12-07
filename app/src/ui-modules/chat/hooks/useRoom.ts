@@ -1,61 +1,50 @@
-import { useCallback, useEffect, useState } from 'react';
-import { IMessage } from '../../../typings';
+import { useCallback, useEffect } from 'react';
 import uiEvent, {
   CONNECTIONS_UI,
   RECEIVE_MESSAGE_UI,
 } from '../../../lib/uiEvent';
 import { createMessage } from '../../../lib/message';
-import { useBackend } from '../../../app/hooks';
+import { useMessagesState } from '../hooks/useMessagesState';
+import { IMessage } from '../../../typings';
 
 export const useRoom = () => {
-  const backend = useBackend();
-
-  const [messages, setMessages] = useState<IMessage[]>([]);
-  const [peersCount, setPeersCount] = useState<number>(0);
-  const [inputText, setInputText] = useState('');
+  const { messages, addNewMessage, updatePeersCount, peersCount } =
+    useMessagesState(); // Use Redux state and actions for messages and peers count
 
   useEffect(() => {
     const messageListener = uiEvent.on(
       RECEIVE_MESSAGE_UI,
       ({ memberId, message }: { memberId: string; message: IMessage }) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { ...message, local: false, memberId },
-        ]);
+        addNewMessage({
+          ...message,
+          local: false,
+          memberId,
+        });
       }
     );
 
     const peerCountListener = uiEvent.on(CONNECTIONS_UI, (count: number) => {
-      setPeersCount(count);
+      updatePeersCount(count);
     });
 
     return () => {
-      messageListener.off('chat');
-      peerCountListener.off('chat');
+      messageListener.off('');
+      peerCountListener.off('');
     };
-  }, []);
+  }, [addNewMessage, updatePeersCount]);
 
-  const appendMessage = useCallback((msg: string, local = false) => {
-    if (msg.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        createMessage(msg, local),
-      ]);
-    }
-  }, []);
-
-  const handleSend = useCallback(() => {
-    if (inputText.trim()) {
-      backend?.sendMessage(inputText, appendMessage);
-      setInputText('');
-    }
-  }, [backend, inputText, appendMessage]);
+  const appendMessage = useCallback(
+    (msg: string, local = false) => {
+      if (msg.trim()) {
+        addNewMessage(createMessage(msg, local));
+      }
+    },
+    [addNewMessage]
+  );
 
   return {
-    messages,
-    peersCount,
-    inputText,
-    handleSend,
-    setInputText,
+    messages, // Redux-managed messages
+    peersCount, // Redux-managed peers count
+    appendMessage, // Redux-managed message adder
   };
 };

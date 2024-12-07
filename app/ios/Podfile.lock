@@ -1277,7 +1277,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - "react-native-bare-kit (0.3.0+de9cb7)":
+  - "react-native-bare-kit (0.3.0+ffe4b1)":
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1573,6 +1573,27 @@ PODS:
     - React-Core
   - RNCClipboard (1.15.0):
     - React-Core
+  - RNFlashList (1.7.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNGestureHandler (2.20.2):
     - DoubleConversion
     - glog
@@ -1785,6 +1806,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
+  - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1945,6 +1967,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
+  RNFlashList:
+    :path: "../node_modules/@shopify/flash-list"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -1999,7 +2023,7 @@ SPEC CHECKSUMS:
   React-logger: 26155dc23db5c9038794db915f80bd2044512c2e
   React-Mapbuffer: ad1ba0205205a16dbff11b8ade6d1b3959451658
   React-microtasksnativemodule: 36e3a415c6a3a5c4784b5c6bad38013b8ca35be4
-  react-native-bare-kit: 225b75f8a196e8ebd946458d0f2ad40d4f706ca3
+  react-native-bare-kit: 80043196ec20f775fd361ef169509397cfb5cd44
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-safe-area-context: 142fade490cbebbe428640b8cbdb09daf17e8191
   React-nativeconfig: aeed6e2a8ac02b2df54476afcc7c663416c12bf7
@@ -2031,6 +2055,7 @@ SPEC CHECKSUMS:
   ReactCommon: 89c87b343deacc8610b099ac764848f0ce937e3e
   RNCAsyncStorage: cc6479c4acd84cc7004946946c8afe30b018184d
   RNCClipboard: 69ab8e51324d5b351f6ba72bbdb72478087a2c64
+  RNFlashList: 115dd44377580761bff386a0caebf165424cf16f
   RNGestureHandler: 511250b190a284388f9dd0d2e56c1df76f14cfb8
   RNReanimated: 365e7d6c1ed443cf8e1b7ba4f0b15dd9f82f052a
   RNScreens: e6f9bc3a41be76af2ba0a815ea299a0000b1c838
