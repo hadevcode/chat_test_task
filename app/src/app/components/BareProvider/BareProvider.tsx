@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
-import useWorklet from '../../../hook/useWorklet';
 import { getBackend } from '../../../lib/rpc';
 
 import type { ReactNode } from 'react';
 import { IMessagingService } from '../../../typings';
+import useWorklet from '../../../ui-modules/chat/hooks/useWorklet';
 
 export const BareApiContext = createContext<IMessagingService | null>(null);
 
@@ -20,7 +20,7 @@ const BareProvider = ({ children, rpcHandler = noop }: IBareProviderProps) => {
 
   useEffect(() => {
     if (!rpc || !worklet) return;
-    // @todo worklet was passed aws the second argument, check if it's needed or not [@author Hrant]
+    // @todo worklet was passed as the second argument, check if it's needed or not [@author Hrant]
     const bareBackend = getBackend(rpc);
     setBackend(bareBackend);
   }, [rpc, worklet]);
@@ -34,7 +34,11 @@ const BareProvider = ({ children, rpcHandler = noop }: IBareProviderProps) => {
 
 export interface IBareProviderProps {
   children: ReactNode;
-  rpcHandler: () => void;
+  rpcHandler: (req: {
+    // @todo fixme
+    command: any;
+    data: Uint8Array<ArrayBufferLike>;
+  }) => void;
 }
 
 export default BareProvider;

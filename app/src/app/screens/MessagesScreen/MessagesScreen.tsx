@@ -1,13 +1,37 @@
-import { Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 
-export const MessagesScreen = () => {
+import { useStyles } from './MessagesScreen.useStyles';
+import Screen from '../../components/Screen';
+
+import { useRoom } from '../../../ui-modules/chat/hooks/useRoom';
+import MessageList from '../../../ui-modules/chat/components/MessageList';
+import MessageInput from '../../../ui-modules/chat/components/MessageInput';
+
+import type { TScreenProps } from '../types';
+
+export const MessagesScreen = ({
+  navigation,
+  route,
+}: TScreenProps<'MessagesScreen'>) => {
+  const { styles } = useStyles();
+  const { messages, peersCount, inputText, handleSend, setInputText } =
+    useRoom();
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
-    >
-      <Text>Aper</Text>
-    </KeyboardAvoidingView>
+    <Screen statusBarType={'darkGrey'} title={peersCount.toString()}>
+      <KeyboardAvoidingView style={styles.container}>
+        <MessageList
+          messages={messages}
+          roomTopic={route.params.roomTopic}
+          peersCount={peersCount}
+        />
+        <MessageInput
+          inputText={inputText}
+          setInputText={setInputText}
+          handleSend={handleSend}
+        />
+      </KeyboardAvoidingView>
+    </Screen>
   );
 };
 

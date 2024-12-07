@@ -52,17 +52,27 @@ export const getBackend = (rpc: Worklet['RPC']) => ({
     req.send('Reverse RN UI!');
     req.reply('utf8').then((res: Error | null | undefined) => callback(res));
   },
-  createRoom: (callback: Callback) => {
+  createRoom: async (callback: Callback) => {
     if (!rpc || !callback) return;
-    const req = rpc.request(API_CREATE_ROOM);
-    req.send('Create Room!');
-    req.reply('utf8').then((res: string) => {
+
+    try {
+      const req = rpc.request(API_CREATE_ROOM);
+      req.send('Create Room!');
+
+      const res = await req.reply('utf8');
       const { done, topic } = JSON.parse(res);
-      console.log(
-        done ? `[info] Created new chat room: ${topic}` : `[info] Create fail`
-      );
-      callback(topic);
-    });
+
+      if (done) {
+        console.log(`[info] Created new chat room: ${topic}`);
+        callback(topic);
+      } else {
+        console.log('[info] Create fail');
+        callback(null);
+      }
+    } catch (error) {
+      console.error(`[error] Failed to create room: ${error}`);
+      callback(null);
+    }
   },
   joinRoom: (topic: string, callback: Callback) => {
     console.log(topic, 'topictopictopic');

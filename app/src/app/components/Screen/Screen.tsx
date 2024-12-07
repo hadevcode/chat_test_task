@@ -1,7 +1,7 @@
 import React, { cloneElement, isValidElement, useLayoutEffect } from 'react';
 import { styles } from './Screen.styles';
 import type { ReactNode } from 'react';
-import { View, ViewProps } from 'react-native';
+import { ViewProps } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSetStatusBar } from '../../hooks';
 

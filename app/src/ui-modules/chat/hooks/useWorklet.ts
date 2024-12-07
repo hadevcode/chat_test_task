@@ -5,7 +5,13 @@ const noReply = () => {
   /* No reply */
 };
 
-const useWorklet = (callback = noReply) => {
+const useWorklet = (
+  callback: (req: {
+    // @todo fixme
+    command: any;
+    data: Uint8Array<ArrayBufferLike>;
+  }) => void
+) => {
   const [worklet, setWorklet] = useState<Worklet | null>(null);
   const [rpc, setRPC] = useState(null);
 
