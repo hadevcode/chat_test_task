@@ -5,13 +5,19 @@ import { BareProvider } from './components';
 import React from 'react';
 import RootNavigator from './navigators/RootNavigator';
 import { rpcHandler } from '../lib/rpc';
+import { BlurBackdropProvider } from './components/BlurBackdrop';
+import { MenuProvider } from 'react-native-popup-menu';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BareProvider rpcHandler={rpcHandler}>
         <NavigationContainer>
-          <RootNavigator />
+          <MenuProvider>
+            <BlurBackdropProvider>
+              <RootNavigator />
+            </BlurBackdropProvider>
+          </MenuProvider>
         </NavigationContainer>
       </BareProvider>
     </GestureHandlerRootView>

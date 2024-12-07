@@ -1,12 +1,10 @@
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import MessagesScreen from '../screens/MessagesScreen';
+import { TAppScreens } from '../screens/types';
 
-// import ChannelJoinScreen from './screens/ChannelJoinScreen'; // Import your ChannelJoinScreen
-// import MessageScreen from './screens/MessageScreen'; // Import your MessageScreen
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<TAppScreens>();
 
 const RootNavigator = () => {
   return (
@@ -28,6 +26,12 @@ const RootNavigator = () => {
 
       {/* Message Screen */}
       <Stack.Screen
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+          headerLeftContainerStyle: {
+            left: 16,
+          },
+        }}
         key="MessagesScreen"
         name="MessagesScreen"
         component={MessagesScreen}

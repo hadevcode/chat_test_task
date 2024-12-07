@@ -30,8 +30,8 @@ export const useRoom = () => {
     });
 
     return () => {
-      messageListener.off();
-      peerCountListener.off();
+      messageListener.off('chat');
+      peerCountListener.off('chat');
     };
   }, []);
 

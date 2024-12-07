@@ -1,15 +1,9 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {
-  CompositeScreenProps,
-  NavigatorScreenParams,
-} from '@react-navigation/native';
+import { CompositeScreenProps } from '@react-navigation/native';
 
 export type TAppScreens = {
   MessagesScreen: { roomTopic: string };
-};
-
-export type TMainScreens = {
-  Drawer: NavigatorScreenParams<TAppScreens>;
+  HomeScreen: undefined;
 };
 
 export type TScreenProps<TScreen extends keyof TAppScreens> =

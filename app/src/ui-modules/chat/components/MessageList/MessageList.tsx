@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStyles } from './MessageList.useStyles';
-import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { IMessage } from '../../../../typings';
+import Message from '../Message';
 
 const MessageList = ({
   messages,
@@ -9,24 +10,39 @@ const MessageList = ({
   peersCount,
 }: IMessageListProps) => {
   const { styles } = useStyles();
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.innerContainer}>
-        <View style={styles.messageList}>
-          <Text selectable>Topic: {roomTopic}</Text>
-          <Text>Peers: {peersCount}</Text>
-          {messages.map((event: IMessage, idx: number) => (
-            <View
-              key={idx}
-              style={[styles.message, event.local ? styles.myMessage : null]}
-            >
-              <Text style={styles.member}>{event?.memberId ?? 'You'}</Text>
-              <Text selectable>{event.message}</Text>
-            </View>
-          ))}
-        </View>
+  const [loading, setLoading] = useState(false);
+
+  const loadMoreMessages = () => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    clearTimeout(timeout);
+  };
+
+  const ListLoader = () => {
+    return loading ? (
+      <View style={styles.listLoader}>
+        <ActivityIndicator size={'small'} color={'white'} />
       </View>
-    </TouchableWithoutFeedback>
+    ) : null;
+  };
+
+  return (
+    <FlatList
+      inverted
+      horizontal={false}
+      bounces={false}
+      data={messages.slice().reverse()}
+      contentContainerStyle={styles.flatList}
+      onEndReachedThreshold={0.5}
+      // onEndReached={loadMoreMessages}
+      // ListFooterComponent={ListLoader}
+      keyExtractor={(item, index) =>
+        `${item.timestamp}_${item.memberId}_${index}`
+      }
+      renderItem={({ item: message }) => <Message message={message} />}
+    />
   );
 };
 

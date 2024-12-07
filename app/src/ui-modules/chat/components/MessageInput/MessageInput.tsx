@@ -1,15 +1,7 @@
 import React from 'react';
 import { useStyles } from './MessageList.useStyles';
-import {
-  Button,
-  Keyboard,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import { IMessage } from '../../../../typings';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { TextInput, TouchableOpacity, View } from 'react-native';
+import { SendIcon } from '../../../../ui-kit/icons';
 
 const MessageInput = ({
   inputText,
@@ -18,15 +10,20 @@ const MessageInput = ({
 }: IMessageInputProps) => {
   const { styles } = useStyles();
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.chatFooterContainer}>
       <TextInput
-        style={styles.msgInput}
-        placeholder="Say something"
+        onChangeText={(text) => {
+          setInputText(text);
+        }}
         value={inputText}
-        onChangeText={setInputText}
+        placeholder="Say something"
+        style={styles.input}
+        multiline
+        placeholderTextColor={'#fff'}
       />
-      <Button title="Send" onPress={handleSend} />
-      <MaterialIcons name="send" size={16} color="white" />
+      <TouchableOpacity onPress={handleSend}>
+        <SendIcon width={40} height={25} color={'#FFF'} />
+      </TouchableOpacity>
     </View>
   );
 };

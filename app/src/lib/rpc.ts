@@ -75,8 +75,6 @@ export const getBackend = (rpc: Worklet['RPC']) => ({
     }
   },
   joinRoom: (topic: string, callback: Callback) => {
-    console.log(topic, 'topictopictopic');
-    console.log(topic);
     if (!rpc || !callback || !topic) return;
     const req = rpc.request(API_JOIN_ROOM);
     req.send(topic);

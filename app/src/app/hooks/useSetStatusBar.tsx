@@ -8,7 +8,7 @@ export const useSetStatusBar = (statusBarType: TStatusBarType) => {
     function pickUpStatusBarProps() {
       switch (statusBarType) {
         case 'white':
-          return { backgroundColor: '#fff', barStyle: 'dark-content' };
+          return { backgroundColor: '#fff', barStyle: 'light-content' };
         case 'primaryDarkGray':
           return { backgroundColor: '#636363', barStyle: 'dark-content' };
         case 'translucent':

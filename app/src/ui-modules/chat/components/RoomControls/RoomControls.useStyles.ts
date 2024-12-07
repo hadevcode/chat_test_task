@@ -1,29 +1,39 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 
 export function useStyles() {
+  const { width } = useWindowDimensions();
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 16,
-      justifyContent: 'flex-end',
+      backgroundColor: '#0B192C',
     },
-    buttonGroup: {
+    appName: {
+      color: 'white',
+      fontSize: 40,
+      textAlign: 'center',
+    },
+    homeBox: {
+      flex: 1,
+      gap: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+      width: '100%',
+    },
+
+    inputWrapper: {
       flexDirection: 'row',
       width: '100%',
-      gap: 8,
     },
-    textInput: {
-      borderWidth: 1,
-      padding: 10,
-      borderRadius: 5,
-      flex: 1,
+    inputContainer: {
+      width: '80%',
     },
-    divider: {
-      height: 1,
-      width: '100%',
-      backgroundColor: 'red',
-      marginVertical: 8,
+    input: {
+      color: 'white',
     },
+    createButton: {},
   });
 
   return { styles };

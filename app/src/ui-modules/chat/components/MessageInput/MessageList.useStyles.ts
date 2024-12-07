@@ -1,25 +1,29 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 
+const ICON_SIZE = 60;
 export function useStyles() {
+  const { width } = useWindowDimensions();
   const styles = StyleSheet.create({
-    inputContainer: {
+    chatFooterContainer: {
+      height: ICON_SIZE,
+      paddingHorizontal: 8,
+      paddingVertical: 10,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 10,
-      paddingVertical: 5,
-      borderTopWidth: 1,
-      borderTopColor: '#ccc',
-      backgroundColor: '#fff',
+      backgroundColor: '#0B192C',
+      justifyContent: 'space-between',
     },
-    msgInput: {
-      flex: 1,
-      height: 40,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 20,
-      paddingHorizontal: 10,
-      marginRight: 10,
-      backgroundColor: '#f9f9f9',
+    input: {
+      padding: 10,
+      borderWidth: 0.5,
+      borderRadius: 5,
+      letterSpacing: 1,
+      color: '#fff',
+      borderColor: 'white',
+      width: width - 60,
     },
   });
 
