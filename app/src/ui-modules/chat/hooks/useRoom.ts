@@ -15,7 +15,6 @@ export const useRoom = () => {
     const messageListener = uiEvent.on(
       RECEIVE_MESSAGE_UI,
       ({ memberId, message }: { memberId: string; message: IMessage }) => {
-        console.log(message, 'message');
         addNewMessage({
           ...message,
           local: false,
