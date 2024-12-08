@@ -12,7 +12,7 @@ const MessageList = ({ messages }: IMessageListProps) => {
       data={messages.slice().reverse()}
       inverted
       estimatedItemSize={40}
-      keyExtractor={(item, index) => `${item.timestamp}_${index}`}
+      keyExtractor={(item, index) => `message_${item.timestamp}_${index}`}
       renderItem={({ item: message }) => <Message message={message} />}
     />
   );

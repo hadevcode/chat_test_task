@@ -5,8 +5,6 @@ import type { ReactNode } from 'react';
 import { IMessagingService } from '../../../typings';
 import useWorklet from '../../../ui-modules/chat/hooks/useWorklet';
 
-import { useMessagesState } from '../../../ui-modules/chat/hooks/useMessagesState';
-
 export const BareApiContext = createContext<IMessagingService | null>(null);
 
 const noop = () => {};
@@ -14,7 +12,6 @@ const noop = () => {};
 const BareProvider = ({ children, rpcHandler = noop }: IBareProviderProps) => {
   const [backend, setBackend] = useState<IMessagingService | null>(null);
   const [worklet, rpc] = useWorklet(rpcHandler);
-  const { updateConnectionStatus } = useMessagesState();
 
   useEffect(() => {
     if (!worklet) return;
@@ -26,12 +23,6 @@ const BareProvider = ({ children, rpcHandler = noop }: IBareProviderProps) => {
 
     const bareBackend = getBackend(rpc);
     setBackend(bareBackend);
-
-    updateConnectionStatus(true);
-
-    return () => {
-      updateConnectionStatus(false);
-    };
   }, [rpc, worklet]);
 
   return (

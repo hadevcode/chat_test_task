@@ -32,9 +32,7 @@ const messageSlice = createSlice({
     clearMessages: (state) => {
       state.messages = [];
     },
-    setConnectionStatus: (state, { payload }: PayloadAction<boolean>) => {
-      state.isConnected = payload;
-    },
+
     setCurrentRoom: (state, { payload }: PayloadAction<string | null>) => {
       state.currentRoom = payload;
     },
@@ -52,7 +50,6 @@ export const {
   setPeersCount,
   clearMessages,
   setCurrentRoom,
-  setConnectionStatus,
   clearState,
 } = messageSlice.actions;
 
@@ -63,8 +60,6 @@ export const selectRoomTopic = (state: { messages: IMessagesState }) =>
   state.messages.roomTopic;
 export const selectPeersCount = (state: { messages: IMessagesState }) =>
   state.messages.peersCount;
-export const selectIsConnected = (state: { messages: IMessagesState }) =>
-  state.messages.isConnected;
 export const selectCurrentRoom = (state: { messages: IMessagesState }) =>
   state.messages.currentRoom;
 

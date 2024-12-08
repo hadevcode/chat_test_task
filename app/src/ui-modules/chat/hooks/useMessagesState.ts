@@ -6,9 +6,7 @@ import {
   selectMessages,
   selectRoomTopic,
   selectPeersCount,
-  selectIsConnected,
   selectCurrentRoom,
-  setConnectionStatus,
   setRoomTopic,
   clearState as clearReduxState,
 } from '../../../app/implementations/Redux/slices/messagesSlice';
@@ -25,16 +23,12 @@ export const useMessagesState = () => {
   const messages = useAppSelector(selectMessages);
   const roomTopic = useAppSelector(selectRoomTopic);
   const peersCount = useAppSelector(selectPeersCount);
-  const isConnected = useAppSelector(selectIsConnected);
   const currentRoom = useAppSelector(selectCurrentRoom);
 
   // Actions
   const addNewMessage = (message: IMessage) => dispatch(addMessage(message));
 
   const updatePeersCount = (count: number) => dispatch(setPeersCount(count));
-
-  const updateConnectionStatus = (status: boolean) =>
-    dispatch(setConnectionStatus(status));
 
   const clearAllMessages = () => dispatch(clearMessages());
 
@@ -51,14 +45,13 @@ export const useMessagesState = () => {
     messages,
     roomTopic,
     peersCount,
-    isConnected,
     currentRoom,
 
     // Actions
     addNewMessage,
     updatePeersCount,
     updateRoomTopic,
-    updateConnectionStatus,
+
     clearAllMessages,
     updateCurrentRoom,
     clearState,

@@ -10,9 +10,9 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        freezeOnBlur: true, // Freeze screens when navigating away
+        freezeOnBlur: true,
       }}
-      detachInactiveScreens // Detach inactive screens for performance
+      detachInactiveScreens
     >
       {/* Channel Join Screen */}
       <Stack.Screen
@@ -31,6 +31,11 @@ const RootNavigator = () => {
           headerLeftContainerStyle: {
             left: 16,
           },
+          headerTitleStyle: {
+            color: 'white',
+          },
+          headerTintColor: 'white',
+          gestureEnabled: false,
         }}
         key="MessagesScreen"
         name="MessagesScreen"

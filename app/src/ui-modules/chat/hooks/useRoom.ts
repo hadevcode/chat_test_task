@@ -4,17 +4,18 @@ import uiEvent, {
   RECEIVE_MESSAGE_UI,
 } from '../../../lib/uiEvent';
 import { createMessage } from '../../../lib/message';
-import { useMessagesState } from '../hooks/useMessagesState';
+import { useMessagesState } from './useMessagesState';
 import { IMessage } from '../../../typings';
 
 export const useRoom = () => {
   const { messages, addNewMessage, updatePeersCount, peersCount } =
-    useMessagesState(); // Use Redux state and actions for messages and peers count
+    useMessagesState();
 
   useEffect(() => {
     const messageListener = uiEvent.on(
       RECEIVE_MESSAGE_UI,
       ({ memberId, message }: { memberId: string; message: IMessage }) => {
+        console.log(message, 'message');
         addNewMessage({
           ...message,
           local: false,
@@ -28,8 +29,8 @@ export const useRoom = () => {
     });
 
     return () => {
-      messageListener.off('');
-      peerCountListener.off('');
+      messageListener.off(RECEIVE_MESSAGE_UI);
+      peerCountListener.off(CONNECTIONS_UI);
     };
   }, [addNewMessage, updatePeersCount]);
 

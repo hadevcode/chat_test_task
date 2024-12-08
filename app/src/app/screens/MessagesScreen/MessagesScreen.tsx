@@ -37,8 +37,8 @@ export const MessagesScreen = ({
 }: NativeStackScreenProps<TAppScreens, 'MessagesScreen'>) => {
   const backend = useBackend();
   const { styles } = useStyles();
-  const { messages, peersCount, appendMessage } = useRoom();
-  const { clearAllMessages, isConnected, clearState } = useMessagesState();
+  const { messages, appendMessage, peersCount } = useRoom();
+  const { clearAllMessages, clearState } = useMessagesState();
   const [inputText, setInputText] = useState('');
   useEffect(() => {
     return () => {
@@ -78,11 +78,6 @@ export const MessagesScreen = ({
         </View>
       ),
       headerStyle: styles.header,
-      headerTitleStyle: {
-        color: 'white',
-      },
-      headerTintColor: 'white',
-      gestureEnabled: false,
     });
   }, [navigation, peersCount]);
 
